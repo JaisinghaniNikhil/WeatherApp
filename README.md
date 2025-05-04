@@ -1,97 +1,107 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# 🌤️ React Native Weather App
 
-# Getting Started
+A simple and elegant weather application built with React Native. Users can search for any city and get real-time weather data using the OpenWeatherMap API. It uses React Navigation for seamless screen transitions and securely handles API keys using `.env`.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+---
 
-## Step 1: Start Metro
+## Features
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+-  Search weather by city name
+-  Real-time temperature, weather status, humidity
+-  Clean and modern UI
+-  Secure API key handling with `react-native-dotenv`
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+---
 
-```sh
-# Using npm
-npm start
+##  Prerequisites
 
-# OR using Yarn
-yarn start
-```
+Make sure you have the following installed:
 
-## Step 2: Build and run your app
+- Node.js (LTS recommended)
+- npm or yarn
+- React Native CLI or Expo CLI
+- Android Studio / Xcode (or a physical device for testing)
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+---
 
-### Android
+## Getting Started
 
-```sh
-# Using npm
-npm run android
+### 1. Clone the repository
 
-# OR using Yarn
-yarn android
-```
+```bash
+git clone https://github.com/your-username/react-native-weatherapp.git
+cd react-native-weatherapp
 
-### iOS
+### 2. Install Dependencies
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+npm install
+npm install @react-navigation/native @react-navigation/native-stack
+npm install react-native-screens react-native-safe-area-context
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
 
-```sh
-bundle install
-```
 
-Then, and every time you update your native dependencies, run:
+## API Setup
 
-```sh
-bundle exec pod install
-```
+### 1. Get your OpenWeatherMap API key
+Sign up at https://openweathermap.org/api and generate an API key
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+### 2. Create a .env file in the root of your project
+OPENWEATHER_API_KEY=your_openweathermap_api_key_here
 
-```sh
-# Using npm
-npm run ios
 
-# OR using Yarn
-yarn ios
-```
+##Environment Configuration
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+### 1. Install react-native-dotenv
+npm install react-native-dotenv
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+### 2. Configure Babel
+Edit your babel.config.js like this:
 
-## Step 3: Modify your app
+module.exports = function(api) {
+  api.cache(true);
+  return {
+    presets: ['module:@react-native/babel-preset'],
+    plugins: [
+      ['module:react-native-dotenv', {
+        moduleName: '@env',
+        path: '.env',
+      }]
+    ]
+  };
+};
 
-Now that you have successfully run the app, let's make changes!
+### 3. Add Type Declarations
+Create a file named env.d.ts in the root:
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+declare module '@env' {
+  export const OPENWEATHER_API_KEY: string;
+}
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+### 4. Update tsconfig.json
+{
+  "extends": "@react-native/typescript-config/tsconfig.json",
+  "compilerOptions": {
+    "types": ["@types/react", "@types/react-native"],
+    "baseUrl": ".",
+    "paths": {
+      "@env": ["env.d.ts"]
+    }
+  },
+  "include": ["env.d.ts", "App.tsx", "Screens/**/*.tsx", "components/**/*.tsx"]
+}
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+##Running the App
+npx react-native run-android
+# or
+npx react-native run-ios
 
-## Congratulations! :tada:
+📊 API Used
+OpenWeatherMap API
 
-You've successfully run and modified your React Native App. :partying_face:
+## 📸 Output Screenshots
 
-### Now what?
+### 🏠 Home Screen
+![Home Screen](assets/screenshots/Home.png)
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+### 🌤️ Weather Screen
+![Weather Screen](assets/screenshots/Weather.png)
